@@ -12,7 +12,7 @@
 
 ## surfaces.yaml
 
-surfaces.yaml is a structed replacement of the "surfaces.txt", component of 伺か(Ukagaka) ghost.
+surfaces.yaml is a structured replacement of the "surfaces.txt", component of 伺か(Ukagaka) ghost.
 
 ### Synopsis
 
