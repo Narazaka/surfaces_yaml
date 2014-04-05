@@ -10,6 +10,10 @@
 
     surfaces_yaml surfaces.yaml surfaces.txt
 
+or use this on the browsers ...
+
+    <script src="surfaces_yaml.js"></script>
+
 ## surfaces.yaml
 
 surfaces.yaml is a structured replacement of the "surfaces.txt", component of 伺か(Ukagaka) ghost.
