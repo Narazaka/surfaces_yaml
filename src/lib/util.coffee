@@ -1,4 +1,4 @@
-exports.clone = clone = (src) ->
+clone = (src) ->
 	if not src? or typeof src isnt 'object'
 		return src
 	ret = new src.constructor()
@@ -6,7 +6,7 @@ exports.clone = clone = (src) ->
 		ret[key] = clone src[key]
 	ret
 
-exports.extend = extend = (child, parent) ->
+extend = (child, parent) ->
 	if (child instanceof Object) and (not (child instanceof Array)) and (parent?) and (parent instanceof Object) and (not (parent instanceof Array))
 		for key of child
 			if parent[key]?
@@ -15,7 +15,7 @@ exports.extend = extend = (child, parent) ->
 			unless child[key]?
 				child[key] = clone parent[key]
 
-exports.entry = class entry
+class entry
 	constructor : (@name) ->
 		@id = 0
 		@entries = []
@@ -27,3 +27,8 @@ exports.entry = class entry
 		for entry in @entries
 			str += entry + "\r\n"
 		str
+
+if exports?
+	exports.clone = clone
+	exports.extend = extend
+	exports.entry = entry

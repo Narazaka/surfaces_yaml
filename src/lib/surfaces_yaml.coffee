@@ -1,8 +1,3 @@
-util = require './util'
-clone = util.clone
-extend = util.extend
-entry = util.entry
-
 class Descript
 	constructor : (@descript) ->
 		
@@ -237,7 +232,8 @@ class Aliases
 			str += "}\r\n"
 		str
 
-exports.Descript = Descript
-exports.Regions = Regions
-exports.Surfaces = Surfaces
-exports.Aliases = Aliases
+if exports?
+	exports.Descript = Descript
+	exports.Regions = Regions
+	exports.Surfaces = Surfaces
+	exports.Aliases = Aliases
