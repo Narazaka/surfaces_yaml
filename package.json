@@ -1,0 +1,23 @@
+{
+  "name": "surfaces_yaml",
+  "version": "0.0.1",
+  "description": "Yet another surfaces.txt - surfaces.yaml",
+  "homepage": "",
+  "main": "index.js",
+  "bin": "bin/surfaces_yaml.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "js-yaml": ">= 3.0.2"
+  },
+  "author": {
+    "name": "narazaka",
+    "url": "http://narazaka.net/"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Narazaka/surfaces_yaml.git"
+  }
+}
