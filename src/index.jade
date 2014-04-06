@@ -6,12 +6,15 @@ html
 		link(rel="stylesheet", href="surfaces_yaml.css")
 		script(src="lib/js-yaml.min.js")
 		script(src="lib/surfaces_yaml.js")
+		script(src="lib/miniajax.nodollar.js")
 		script(src="surfaces_yaml_web.js")
 	body
 		h1 surfaces_yaml
 		p
 			a(href="https://github.com/Narazaka/surfaces_yaml.git", target="_blank") fork me on Github
 		p surfaces.yaml -&gt; surfaces.txt
+		p
+			input(type="button", value="set example yaml")#set_example
 		p
 			textarea(cols="32", rows="20")#yaml
 			input(type="button", value="yaml -> txt")#to

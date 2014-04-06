@@ -1,0 +1,183 @@
+descript :
+	# SERIKO/2.0
+	version : 1
+	maxwidth : 300
+	collision-sort : ascend
+	animation-sort : ascend
+
+surfaces :
+	# 継承のためidで管理
+	素 :
+		# isの番号がsurface*に記述される
+		# isがある場合のみエントリは記述される(is無しは継承元としてのみ機能)
+		is : 0
+		# trueのキャラクターにaliasを作る
+		characters :
+			# sakura.surface.aliasに追加
+			sakura : true
+		# point.*
+		points :
+			centerx : 0
+			centery : 0
+			kinoko :
+				centerx : 0
+				centery : 0
+			basepos :
+				x : 0
+				y : 0
+		# balloon.*
+		balloons :
+			sakura :
+				# sakura.balloon.*
+				offsetx : 0
+				offsety : 0
+			# balloon.*
+			offsetx : 0
+			offsety : 0
+		# element*
+		elements :
+			# 継承のためidで管理
+			ベース :
+				# isの番号がelement*に記述される
+				# isがある場合のみエントリは記述される(is無しは継承元としてのみ機能)
+				is : 0
+				# element*,type,file,x,y
+				type : overlay
+				file : surface0.png
+				x : 0
+				y : 0
+			表情 :
+				is : 1
+				type : overlayfast
+				file : surface1000.png
+				x : 30
+				y : 50
+		# collision*
+		regions :
+			# 継承のためidで管理
+			# isを記述しエントリに追加する場合はこのidはregionsで指定されたものに限る
+			# regionsでこのidのものに定義されたisをcollisionのIDとして使用する
+			胸 :
+				# isの番号がcollision*に記述される
+				# isがある場合のみエントリは記述される(is無しは継承元としてのみ機能)
+				is : 0
+				# type=rectならcollision、それ以外ならcollisionexとして出力
+				type : rect
+				# collision*,left,top,right,bottom,ID
+				left : 20
+				top : 110
+				right : 100
+				bottom : 130
+			顔 :
+				is : 1
+				type : polygon
+				# collisionex*,ID,polygon,coordinates[0].x,coordinates[0].y,...
+				coordinates :
+					- {x : 30, y : 50}
+					- {x : 80, y : 55}
+					- {x : 80, y : 85}
+					- {x : 30, y : 85}
+			肩 :
+				is : 2
+				type : ellipse
+				# collisionex*,ID,ellipse,top,right,bottom
+				left : 80
+				top : 100
+				right : 90
+				bottom : 110
+		# animation*
+		animations :
+			# 継承のためidで管理
+			目パチ :
+				# isの番号がanimation*に記述される
+				# isがある場合のみエントリは記述される(is無しは継承元としてのみ機能)
+				is : 0
+				# animation*.interval
+				interval : random,10
+				# animation*.option
+				option : exclusive
+				# animation*.pattern*
+				patterns :
+					# 配列インデックスがpattern*に記述される
+					-
+						# animation*,pattern*,type,surface,wait,x,y
+						# うち場合によって後半必要でないものは記述しなくてよい
+						type : overlay
+						# surface番号(-1,-2等含む)かsurfacesでの定義id
+						surface : 1001
+						wait : 125
+						x : 40
+						y : 55
+					- {type : overlay, surface : 1002, wait : 125, x : 40, y : 55}
+					- {type : overlay, surface : -1}
+				# animation*.collision*
+				regions :
+					# regionsの定義と同一
+					まぶた :
+						is : 0
+						type : rect
+						left : 40
+						top : 55
+						right : 75
+						bottom : 70
+	エロ面 :
+		is : 1
+		# 継承元id
+		base : 素
+		elements :
+			表情 :
+				# 継承元から変更する属性のみを記述する
+				file : surface1010.png
+	驚き :
+		is : 2
+		base : 素
+		elements :
+			表情 :
+				file : surface1020.png
+		regions :
+			# deleteキーワードで継承元のエントリを無効にする
+			胸 : delete
+	笑顔1 :
+		is : 5
+		base : 素
+		elements :
+			表情 :
+				file : surface1050.png
+	笑顔2 :
+		is : 50
+		base : 素
+		elements :
+			表情 :
+				file : surface1500.png
+
+aliases :
+	#sakura.surface.alias
+	sakura :
+		# 笑顔,[...]
+		笑顔 :
+			# surface番号かsurfacesでの定義id
+			- 笑顔1
+			- 笑顔2
+
+regions :
+	# 識別のためidで管理
+	胸 :
+		# isの名称がcollisionのIDとして使用される
+		is : bust
+		# *.cursorと*.tooltipsの定義
+		characters :
+			sakura :
+				# sakura.tooltips
+				# bust,むねだよ
+				tooltip : むねだよ
+				# sakura.cursor
+				cursor :
+					# mouseup*,bust,system:hand
+					mouseup : system:hand
+					mousedown : system:grip
+	顔 :
+		is : face
+	肩 :
+		is : kata
+	まぶた :
+		is : mabuta
