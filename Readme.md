@@ -31,9 +31,13 @@ or use this on the browsers ...
 
 surfaces.yaml is a structured replacement of the "surfaces.txt", component of 伺か(Ukagaka) ghost.
 
+surfaces.yaml is YAML but surfaces\_yaml allows tabs.
+
 ### Synopsis
 
 examples/surfaces.yaml
+
+this will be converted to examples/surfaces.txt
 
     descript :
         # SERIKO/2.0
@@ -188,19 +192,28 @@ examples/surfaces.yaml
                     file : surface1500.png
 
     aliases :
+        #sakura.surface.alias
         sakura :
-            # aliasの仕様上何個もあってよいので
+            # 笑顔,[...]
             笑顔 :
+                # surface番号かsurfacesでの定義id
                 - 笑顔1
                 - 笑顔2
 
     regions :
+        # 識別のためidで管理
         胸 :
+            # isの名称がcollisionのIDとして使用される
             is : bust
+            # *.cursorと*.tooltipsの定義
             characters :
                 sakura :
+                    # sakura.tooltips
+                    # bust,むねだよ
                     tooltip : むねだよ
+                    # sakura.cursor
                     cursor :
+                        # mouseup*,bust,system:hand
                         mouseup : system:hand
                         mousedown : system:grip
         顔 :

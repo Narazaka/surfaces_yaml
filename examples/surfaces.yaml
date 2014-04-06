@@ -151,19 +151,28 @@ surfaces :
 				file : surface1500.png
 
 aliases :
+	#sakura.surface.alias
 	sakura :
-		# aliasの仕様上何個もあってよいので
+		# 笑顔,[...]
 		笑顔 :
+			# surface番号かsurfacesでの定義id
 			- 笑顔1
 			- 笑顔2
 
 regions :
+	# 識別のためidで管理
 	胸 :
+		# isの名称がcollisionのIDとして使用される
 		is : bust
+		# *.cursorと*.tooltipsの定義
 		characters :
 			sakura :
+				# sakura.tooltips
+				# bust,むねだよ
 				tooltip : むねだよ
+				# sakura.cursor
 				cursor :
+					# mouseup*,bust,system:hand
 					mouseup : system:hand
 					mousedown : system:grip
 	顔 :
