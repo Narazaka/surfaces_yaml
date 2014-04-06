@@ -1,4 +1,9 @@
-class Descript
+if require?
+	jsyaml = require 'js-yaml'
+
+SurfacesYaml = {}
+
+class SurfacesYaml.Descript
 	constructor : (@descript) ->
 		
 	get : -> @descript
@@ -9,7 +14,7 @@ class Descript
 			str += key + ' : ' + value + '\r\n'
 		str += "}\r\n"
 
-class Regions
+class SurfacesYaml.Regions
 	constructor : (@regions) ->
 		
 	get : -> @regions
@@ -51,7 +56,7 @@ class Regions
 			str += "}\r\n"
 		str
 
-class Surfaces
+class SurfacesYaml.Surfaces
 	constructor : (@surfaces) ->
 		@surfaces_finalized = {}
 		for id, surface of @surfaces
@@ -197,7 +202,7 @@ class Surfaces
 		result
 		
 
-class Aliases
+class SurfacesYaml.Aliases
 	constructor : (@aliases) ->
 		
 	get : -> @aliases
@@ -232,8 +237,29 @@ class Aliases
 			str += "}\r\n"
 		str
 
+SurfacesYaml.to_txt = (data) ->
+	descript = new SurfacesYaml.Descript data.descript
+	regions = new SurfacesYaml.Regions data.regions
+	surfaces = new SurfacesYaml.Surfaces data.surfaces
+	aliases = new SurfacesYaml.Aliases data.aliases
+	txt = ''
+	txt += descript.to_string()
+	txt += regions.to_string()
+	txt += surfaces.to_string(regions.get())
+	txt += aliases.to_string(surfaces.get())
+	txt
+
+SurfacesYaml.yaml_to_txt = (yaml_str) ->
+	try
+		data = jsyaml.safeLoad yaml_str.replace /\t/g, '  '
+	catch e
+		throw e
+	SurfacesYaml.to_txt data
+
 if exports?
-	exports.Descript = Descript
-	exports.Regions = Regions
-	exports.Surfaces = Surfaces
-	exports.Aliases = Aliases
+	exports.Descript = SurfacesYaml.Descript
+	exports.Regions = SurfacesYaml.Regions
+	exports.Surfaces = SurfacesYaml.Surfaces
+	exports.Aliases = SurfacesYaml.Aliases
+	exports.to_txt = SurfacesYaml.to_txt
+	exports.yaml_to_txt = SurfacesYaml.yaml_to_txt

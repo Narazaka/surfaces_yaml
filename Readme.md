@@ -10,9 +10,19 @@
 
     surfaces_yaml surfaces.yaml surfaces.txt
 
+or use this on your program ...
+
+    var fs = require('fs');
+    var SurfacesYaml = require('surfaces_yaml');
+    var yaml_str = fs.readFileSync('surfaces.yaml', 'utf8');
+    var txt = SurfacesYaml.yaml_to_txt(yaml_str);
+    fs.writeFileSync('surfaces.txt', txt, 'utf8');
+
 or use this on the browsers ...
 
     <script src="surfaces_yaml.js"></script>
+    ...
+    var txt = SurfacesYaml.yaml_to_txt(yaml_str);
 
 ## surfaces.yaml
 

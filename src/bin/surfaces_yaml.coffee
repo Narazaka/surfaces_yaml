@@ -1,26 +1,9 @@
 fs = require 'fs'
-yaml = require 'js-yaml'
-surfaces_yaml = require 'surfaces_yaml'
-Descript = surfaces_yaml.Descript
-Regions = surfaces_yaml.Regions
-Surfaces = surfaces_yaml.Surfaces
-Aliases = surfaces_yaml.Aliases
+SurfacesYaml = require 'surfaces_yaml'
 
 totxt = (file, file_out) ->
 	yaml_str = fs.readFileSync file, 'utf8'
-	try
-		data = yaml.safeLoad yaml_str.replace /\t/g, '  '
-	catch e
-		throw e
-	descript = new Descript data.descript
-	regions = new Regions data.regions
-	surfaces = new Surfaces data.surfaces
-	aliases = new Aliases data.aliases
-	txt = ''
-	txt += descript.to_string()
-	txt += regions.to_string()
-	txt += surfaces.to_string(regions.get())
-	txt += aliases.to_string(surfaces.get())
+	txt = SurfacesYaml.yaml_to_txt yaml_str
 	fs.writeFileSync file_out, txt, 'utf8'
 
 if process.argv.length != 4
