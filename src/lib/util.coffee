@@ -15,20 +15,6 @@ extend = (child, parent) ->
 			unless child[key]?
 				child[key] = clone parent[key]
 
-class entry
-	constructor : (@name) ->
-		@id = 0
-		@entries = []
-	add : (args...) ->
-		@entries.push @name + @id + ',' + (args.join ',')
-		@id++
-	to_string : ->
-		str = ''
-		for entry in @entries
-			str += entry + "\r\n"
-		str
-
 if exports?
 	exports.clone = clone
 	exports.extend = extend
-	exports.entry = entry

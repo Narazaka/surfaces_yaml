@@ -33,20 +33,22 @@ class SurfacesYaml.Regions
 				if setting.cursor?
 					if setting.cursor.mouseup?
 						unless entry_mouseup[character]?
-							entry_mouseup[character] = new entry 'mouseup'
-						entry_mouseup[character].add region.is, setting.cursor.mouseup
+							entry_mouseup[character] = []
+						entry_mouseup[character].push "#{region.is},#{setting.cursor.mouseup}"
 					if setting.cursor.mousedown?
 						unless entry_mousedown[character]?
-							entry_mousedown[character] = new entry 'mousedown'
-						entry_mousedown[character].add region.is, setting.cursor.mousedown
+							entry_mousedown[character] = []
+						entry_mousedown[character].push "#{region.is},#{setting.cursor.mousedown}"
 		str = ''
 		for character of characters
 			str += "#{character}.cursor\r\n"
 			str += "{\r\n"
 			if entry_mouseup[character]?
-				str += entry_mouseup[character].to_string()
+				for entry, index in entry_mouseup[character]
+					str += "mouseup#{index},#{entry}\r\n"
 			if entry_mousedown[character]?
-				str += entry_mousedown[character].to_string()
+				for entry, index in entry_mousedown[character]
+					str += "mousedown#{index},#{entry}\r\n"
 			str += "}\r\n"
 			str += "#{character}.tooltips\n"
 			str += "{\r\n"
