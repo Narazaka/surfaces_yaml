@@ -4,6 +4,8 @@
 
 ## Installation
 
+this requires [js-yaml](https://github.com/nodeca/js-yaml)
+
     npm install -g surfaces_yaml
 
 ## Usage
@@ -20,6 +22,7 @@ or use this on your program ...
 
 or use this on the browsers ...
 
+    <script src="js-yaml.min.js"></script>
     <script src="surfaces_yaml.js"></script>
     ...
     var txt = SurfacesYaml.yaml_to_txt(yaml_str);
