@@ -2,9 +2,14 @@
 (function() {
   window.onload = function() {
     document.getElementById('to').onclick = function() {
-      var txt, yaml_str;
+      var e, txt, yaml_str;
       yaml_str = document.getElementById('yaml').value;
-      txt = SurfacesYaml.yaml_to_txt(yaml_str);
+      try {
+        txt = SurfacesYaml.yaml_to_txt(yaml_str);
+      } catch (_error) {
+        e = _error;
+        alert(e);
+      }
       return document.getElementById('txt').value = txt;
     };
     return document.getElementById('set_example').onclick = function() {
