@@ -50,7 +50,7 @@ class SurfacesYaml.Regions
 				for entry, index in entry_mousedown[character]
 					str += "mousedown#{index},#{entry}\r\n"
 			str += "}\r\n"
-			str += "#{character}.tooltips\n"
+			str += "#{character}.tooltips\r\n"
 			str += "{\r\n"
 			if entry_tooltip[character]?
 				for entry in entry_tooltip[character]
@@ -157,6 +157,10 @@ class SurfacesYaml.Surfaces
 				result.push "animation#{animation.is}.option,#{animation.option}"
 			if animation.patterns?
 				for pattern, index in animation.patterns
+					surface = null
+					wait = null
+					x = null
+					y = null
 					if pattern.surface?
 						pattern.surface
 						if isNaN(pattern.surface)

@@ -32,7 +32,7 @@ animation0.interval,random,10
 animation0.option,exclusive
 animation0.pattern0,overlay,1001,125,40,55
 animation0.pattern1,overlay,1002,125,40,55
-animation0.pattern2,overlay,-1,125,40,55
+animation0.pattern2,overlay,-1
 animation0.collision0,40,55,75,70,mabuta
 collision0,20,110,100,130,bust
 collisionex1,face,polygon,30,50,80,55,80,85,30,85
@@ -56,7 +56,7 @@ animation0.interval,random,10
 animation0.option,exclusive
 animation0.pattern0,overlay,1001,125,40,55
 animation0.pattern1,overlay,1002,125,40,55
-animation0.pattern2,overlay,-1,125,40,55
+animation0.pattern2,overlay,-1
 animation0.collision0,40,55,75,70,mabuta
 collision0,20,110,100,130,bust
 collisionex1,face,polygon,30,50,80,55,80,85,30,85
@@ -80,7 +80,7 @@ animation0.interval,random,10
 animation0.option,exclusive
 animation0.pattern0,overlay,1001,125,40,55
 animation0.pattern1,overlay,1002,125,40,55
-animation0.pattern2,overlay,-1,125,40,55
+animation0.pattern2,overlay,-1
 animation0.collision0,40,55,75,70,mabuta
 collisionex1,face,polygon,30,50,80,55,80,85,30,85
 collisionex2,kata,ellipse,80,100,90,110
@@ -103,7 +103,7 @@ animation0.interval,random,10
 animation0.option,exclusive
 animation0.pattern0,overlay,1001,125,40,55
 animation0.pattern1,overlay,1002,125,40,55
-animation0.pattern2,overlay,-1,125,40,55
+animation0.pattern2,overlay,-1
 animation0.collision0,40,55,75,70,mabuta
 collision0,20,110,100,130,bust
 collisionex1,face,polygon,30,50,80,55,80,85,30,85
@@ -127,7 +127,7 @@ animation0.interval,random,10
 animation0.option,exclusive
 animation0.pattern0,overlay,1001,125,40,55
 animation0.pattern1,overlay,1002,125,40,55
-animation0.pattern2,overlay,-1,125,40,55
+animation0.pattern2,overlay,-1
 animation0.collision0,40,55,75,70,mabuta
 collisionex1,face,polygon,30,50,80,55,80,85,30,85
 collisionex2,kata,ellipse,80,100,90,110
