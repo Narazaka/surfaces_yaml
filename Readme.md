@@ -186,7 +186,8 @@ this will be converted to examples/surfaces.txt
                     file : surface1050.png
         笑顔2 :
             is : 50
-            base : 素
+            # 多重継承可能 先に書いたほうの属性が優先される
+            base : [驚き, 素]
             elements :
                 表情 :
                     file : surface1500.png
