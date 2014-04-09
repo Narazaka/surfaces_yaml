@@ -19,28 +19,26 @@ class SurfacesYaml.Regions
 		
 	get : -> @regions
 	to_string : ->
-		characters = {}
 		entry_mouseup = {}
 		entry_mousedown = {}
 		entry_tooltip = {}
-		for region_name, region of @regions
-			for character, setting of region.characters
-				characters[character] = true
+		for character, regions of @regions
+			for name, setting of regions
 				if setting.tooltip?
 					unless entry_tooltip[character]?
 						entry_tooltip[character] = []
-					entry_tooltip[character].push "#{region.is},#{setting.tooltip}"
+					entry_tooltip[character].push "#{name},#{setting.tooltip}"
 				if setting.cursor?
 					if setting.cursor.mouseup?
 						unless entry_mouseup[character]?
 							entry_mouseup[character] = []
-						entry_mouseup[character].push "#{region.is},#{setting.cursor.mouseup}"
+						entry_mouseup[character].push "#{name},#{setting.cursor.mouseup}"
 					if setting.cursor.mousedown?
 						unless entry_mousedown[character]?
 							entry_mousedown[character] = []
-						entry_mousedown[character].push "#{region.is},#{setting.cursor.mousedown}"
+						entry_mousedown[character].push "#{name},#{setting.cursor.mousedown}"
 		str = ''
-		for character of characters
+		for character of @regions
 			str += "#{character}.cursor\r\n"
 			str += "{\r\n"
 			if entry_mouseup[character]?
@@ -115,7 +113,7 @@ class SurfacesYaml.Surfaces
 			if surface.is?
 				str += @to_string_surface(surface, regions)
 		str
-	to_string_surface : (surface, regions_definition) ->
+	to_string_surface : (surface) ->
 		str = "surface#{surface.is}\r\n"
 		str += "{\r\n"
 		if surface.points?
@@ -125,9 +123,9 @@ class SurfacesYaml.Surfaces
 		if surface.elements?
 			str += @to_string_from_entries @to_string_surface_elements surface.elements
 		if surface.animations?
-			str += @to_string_from_entries @to_string_surface_animations surface.animations, regions_definition
+			str += @to_string_from_entries @to_string_surface_animations surface.animations
 		if surface.regions?
-			str += @to_string_from_entries @to_string_surface_regions surface.regions, regions_definition
+			str += @to_string_from_entries @to_string_surface_regions surface.regions
 		str += "}\r\n"
 		str
 	to_string_from_entries : (entries) ->
@@ -162,7 +160,7 @@ class SurfacesYaml.Surfaces
 			element = elements[id]
 			result.push "element#{element.is},#{element.type},#{element.file},#{element.x},#{element.y}"
 		result
-	to_string_surface_animations : (animations, regions_definition) ->
+	to_string_surface_animations : (animations) ->
 		order = []
 		for id, animation of animations
 			if animation.is?
@@ -198,11 +196,11 @@ class SurfacesYaml.Surfaces
 								options.push @get_animation_id animations, animation_id
 					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}," + (o for o in options when o?).join(',')
 			if animation.regions?
-				region_entries = @to_string_surface_regions animation.regions, regions_definition
+				region_entries = @to_string_surface_regions animation.regions
 				for region_entry in region_entries
 					result.push "animation#{animation.is}.#{region_entry}"
 		result
-	to_string_surface_regions : (regions, regions_definition) ->
+	to_string_surface_regions : (regions) ->
 		order = []
 		for id, region of regions
 			if region.is?
@@ -210,17 +208,13 @@ class SurfacesYaml.Surfaces
 		result = []
 		for id in order when id?
 			region = regions[id]
-			if regions_definition[id]? and regions_definition[id].is?
-				c_id = regions_definition[id].is
-			else
-				throw "region(collision) id not found : #{id}"
 			if (not region.type?) or (region.type == 'rect')
-				result.push "collision#{region.is},#{region.left},#{region.top},#{region.right},#{region.bottom},#{c_id}"
+				result.push "collision#{region.is},#{region.left},#{region.top},#{region.right},#{region.bottom},#{region.name}"
 			else if region.type == 'ellipse'
-				result.push "collisionex#{region.is},#{c_id},#{region.type},#{region.left},#{region.top},#{region.right},#{region.bottom}"
+				result.push "collisionex#{region.is},#{region.name},#{region.type},#{region.left},#{region.top},#{region.right},#{region.bottom}"
 			else if region.type == 'polygon'
 				
-				result.push "collisionex#{region.is},#{c_id},#{region.type}" + (",#{coordinate.x},#{coordinate.y}" for coordinate in region.coordinates).join('')
+				result.push "collisionex#{region.is},#{region.name},#{region.type}" + (",#{coordinate.x},#{coordinate.y}" for coordinate in region.coordinates).join('')
 			else
 				throw "unknown region(collision) type : #{region.type}"
 		result
@@ -269,7 +263,7 @@ SurfacesYaml.to_txt = (data) ->
 	txt = ''
 	txt += descript.to_string()
 	txt += regions.to_string()
-	txt += surfaces.to_string(regions.get())
+	txt += surfaces.to_string()
 	txt += aliases.to_string(surfaces.get())
 	txt
 

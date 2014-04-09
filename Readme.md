@@ -96,12 +96,12 @@ this will be converted to examples/surfaces.txt
             # collision*
             regions :
                 # 継承のためidで管理
-                # isを記述しエントリに追加する場合はこのidはregionsで指定されたものに限る
-                # regionsでこのidのものに定義されたisをcollisionのIDとして使用する
                 胸 :
                     # isの番号がcollision*に記述される
                     # isがある場合のみエントリは記述される(is無しは継承元としてのみ機能)
                     is : 0
+                    # 領域のID
+                    name : bust
                     # type=rectならcollision、それ以外ならcollisionexとして出力
                     type : rect
                     # collision*,left,top,right,bottom,ID
@@ -111,6 +111,7 @@ this will be converted to examples/surfaces.txt
                     bottom : 130
                 顔 :
                     is : 1
+                    name : face
                     type : polygon
                     # collisionex*,ID,polygon,coordinates[0].x,coordinates[0].y,...
                     coordinates :
@@ -120,6 +121,7 @@ this will be converted to examples/surfaces.txt
                         - {x : 30, y : 85}
                 肩 :
                     is : 2
+                    name : kata
                     type : ellipse
                     # collisionex*,ID,ellipse,top,right,bottom
                     left : 80
@@ -156,6 +158,7 @@ this will be converted to examples/surfaces.txt
                         # regionsの定義と同一
                         まぶた :
                             is : 0
+                            name : mabuta
                             type : rect
                             left : 40
                             top : 55
@@ -215,24 +218,15 @@ this will be converted to examples/surfaces.txt
                 - 笑顔2
 
     regions :
-        # 識別のためidで管理
-        胸 :
-            # isの名称がcollisionのIDとして使用される
-            is : bust
-            # *.cursorと*.tooltipsの定義
-            characters :
-                sakura :
-                    # sakura.tooltips
-                    # bust,むねだよ
-                    tooltip : むねだよ
-                    # sakura.cursor
-                    cursor :
-                        # mouseup*,bust,system:hand
-                        mouseup : system:hand
-                        mousedown : system:grip
-        顔 :
-            is : face
-        肩 :
-            is : kata
-        まぶた :
-            is : mabuta
+        # *.cursorと*.tooltipsの定義
+        sakura :
+            # 領域ID
+            bust :
+                # sakura.tooltips
+                # bust,むねだよ
+                tooltip : むねだよ
+                # sakura.cursor
+                cursor :
+                    # mouseup*,bust,system:hand
+                    mouseup : system:hand
+                    mousedown : system:grip
