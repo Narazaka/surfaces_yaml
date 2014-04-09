@@ -3,6 +3,12 @@ if require?
 
 SurfacesYaml = {}
 
+class SurfacesYaml.Charset
+	constructor : (@charset) ->
+		
+	get : -> @charset
+	to_string : -> "charset,#{@charset}\r\n"
+
 class SurfacesYaml.Descript
 	constructor : (@descript) ->
 		
@@ -256,11 +262,13 @@ class SurfacesYaml.Aliases
 		str
 
 SurfacesYaml.to_txt = (data) ->
+	charset = new SurfacesYaml.Charset data.charset
 	descript = new SurfacesYaml.Descript data.descript
 	regions = new SurfacesYaml.Regions data.regions
 	surfaces = new SurfacesYaml.Surfaces data.surfaces
 	aliases = new SurfacesYaml.Aliases data.aliases
 	txt = ''
+	txt += charset.to_string()
 	txt += descript.to_string()
 	txt += regions.to_string()
 	txt += surfaces.to_string()

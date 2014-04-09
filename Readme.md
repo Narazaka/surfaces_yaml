@@ -27,6 +27,8 @@ or use this on the browsers ...
     ...
     var txt = SurfacesYaml.yaml_to_txt(yaml_str);
 
+surfaces\_yaml command currently supports only utf-8 output (because shift\_jis support requires [iconv](https://github.com/bnoordhuis/node-iconv), but sometimes problems will occur when installing it to Windows under some environments).
+
 ## surfaces.yaml
 
 surfaces.yaml is a structured replacement of the "surfaces.txt", component of 伺か(Ukagaka) ghost.
@@ -38,6 +40,8 @@ surfaces.yaml is YAML but surfaces\_yaml allows tabs.
 examples/surfaces.yaml
 
 this will be converted to examples/surfaces.txt
+
+    charset : UTF-8
 
     descript :
         # SERIKO/2.0
