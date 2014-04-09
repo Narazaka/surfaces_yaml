@@ -169,6 +169,19 @@ this will be converted to examples/surfaces.txt
                 表情 :
                     # 継承元から変更する属性のみを記述する
                     file : surface1010.png
+            animations :
+                サンプル1 :
+                    is : 1
+                    interval : never
+                    patterns :
+                        # start, stop, insertはanimation_idのみを指定
+                        - {type : start, animation_id : 目パチ}
+                サンプル2 :
+                    is : 2
+                    interval : never
+                    patterns :
+                        # alternativestart, alternativestopはanimation_idsのみを指定
+                        - {type : alternativestart, animation_ids : [目パチ,サンプル1]}
         驚き :
             is : 2
             base : 素

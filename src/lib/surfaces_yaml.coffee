@@ -90,6 +90,25 @@ class SurfacesYaml.Surfaces
 			exit # ?
 #		console.log 'end ',id,@surfaces_finalized[id]
 	validate : (surface) ->
+		
+	get_surface_id : (surface_id) ->
+		if isNaN(surface_id)
+			# not number
+			if @surfaces_finalized[surface_id]? and @surfaces_finalized[surface_id].is?
+				return @surfaces_finalized[surface_id].is
+			else
+				throw "non-number surface target not found : #{surface_id}"
+		else
+			return surface_id
+	get_animation_id : (animations, animation_id) ->
+		if isNaN(animation_id)
+			# not number
+			if animations[animation_id]? and animations[animation_id].is?
+				return animations[animation_id].is
+			else
+				throw "non-number surface animation target not found : #{animation_id}"
+		else
+			return animation_id
 	to_string : (regions) ->
 		str = ''
 		for id, surface of @surfaces_finalized
@@ -161,24 +180,23 @@ class SurfacesYaml.Surfaces
 					wait = null
 					x = null
 					y = null
-					if pattern.surface?
-						pattern.surface
-						if isNaN(pattern.surface)
-							# not number
-							if @surfaces_finalized[pattern.surface]? and @surfaces_finalized[pattern.surface].is?
-								surface = @surfaces_finalized[pattern.surface].is
-							else
-								throw "non-number animation surface target not found : #{id} -> #{pattern.surface}"
-						else
-							surface = pattern.surface
-					if pattern.wait?
-						wait = pattern.wait
-					if pattern.x?
-						x = pattern.x
-					if pattern.y?
-						y = pattern.y
-					options = (",#{option}" for option in [surface, wait, x, y] when option?)
-					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}" + options.join('')
+					switch pattern.type
+						when 'overlay', 'overlayfast', 'reduce', 'replace', 'interpolate', 'asis', 'bind', 'add', 'reduce'
+							surface = @get_surface_id pattern.surface
+							options = [surface, pattern.wait, pattern.x, pattern.y]
+						when 'base'
+							surface = @get_surface_id pattern.surface
+							options = [surface, pattern.wait]
+						when 'move'
+							options = [0, pattern.wait, pattern.x, pattern.y]
+						when 'insert', 'start', 'stop'
+							animation_id = @get_animation_id animations, pattern.animation_id
+							options = [animation_id]
+						when 'alternativestart', 'alternativestop'
+							options = []
+							for animation_id in pattern.animation_ids
+								options.push @get_animation_id animations, animation_id
+					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}," + (o for o in options when o?).join(',')
 			if animation.regions?
 				region_entries = @to_string_surface_regions animation.regions, regions_definition
 				for region_entry in region_entries
