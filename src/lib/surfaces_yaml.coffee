@@ -17,7 +17,7 @@ class SurfacesYaml.Descript
 		str = "descript\r\n"
 		str += "{\r\n"
 		for key, value of @descript
-			str += key + ' : ' + value + '\r\n'
+			str += key + ',' + value + '\r\n'
 		str += "}\r\n"
 
 class SurfacesYaml.Regions
@@ -219,7 +219,6 @@ class SurfacesYaml.Surfaces
 			else if region.type == 'ellipse'
 				result.push "collisionex#{region.is},#{region.name},#{region.type},#{region.left},#{region.top},#{region.right},#{region.bottom}"
 			else if region.type == 'polygon'
-				
 				result.push "collisionex#{region.is},#{region.name},#{region.type}" + (",#{coordinate.x},#{coordinate.y}" for coordinate in region.coordinates).join('')
 			else
 				throw "unknown region(collision) type : #{region.type}"

@@ -1,10 +1,10 @@
 charset,UTF-8
 descript
 {
-version : 1
-maxwidth : 300
-collision-sort : ascend
-animation-sort : ascend
+version,1
+maxwidth,300
+collision-sort,ascend
+animation-sort,ascend
 }
 sakura.cursor
 {
