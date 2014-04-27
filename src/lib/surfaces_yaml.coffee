@@ -7,7 +7,7 @@ class SurfacesYaml.Charset
 	constructor : (@charset) ->
 		
 	get : -> @charset
-	to_string : -> "charset,#{@charset}\r\n"
+	to_string : -> if @charset? then "charset,#{@charset}\r\n" else ""
 
 class SurfacesYaml.Descript
 	constructor : (@descript) ->
@@ -164,7 +164,7 @@ class SurfacesYaml.Surfaces
 		result = []
 		for id in order when id?
 			element = elements[id]
-			result.push "element#{element.is},#{element.type},#{element.file},#{element.x},#{element.y}"
+			result.push "element#{element.is},#{element.type},#{element.file},#{element.x || 0},#{element.y || 0}"
 		result
 	to_string_surface_animations : (animations) ->
 		order = []
@@ -180,32 +180,33 @@ class SurfacesYaml.Surfaces
 				result.push "animation#{animation.is}.option,#{animation.option}"
 			if animation.patterns?
 				for pattern, index in animation.patterns
-					surface = null
-					wait = null
-					x = null
-					y = null
-					switch pattern.type
-						when 'overlay', 'overlayfast', 'reduce', 'replace', 'interpolate', 'asis', 'bind', 'add', 'reduce'
-							surface = @get_surface_id pattern.surface
-							options = [surface, pattern.wait, pattern.x, pattern.y]
-						when 'base'
-							surface = @get_surface_id pattern.surface
-							options = [surface, pattern.wait]
-						when 'move'
-							options = [0, pattern.wait, pattern.x, pattern.y]
-						when 'insert', 'start', 'stop'
-							animation_id = @get_animation_id animations, pattern.animation_id
-							options = [animation_id]
-						when 'alternativestart', 'alternativestop'
-							options = []
-							for animation_id in pattern.animation_ids
-								options.push @get_animation_id animations, animation_id
+					options = @to_string_pattern_arguments pattern
 					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}," + (o for o in options when o?).join(',')
 			if animation.regions?
 				region_entries = @to_string_surface_regions animation.regions
 				for region_entry in region_entries
 					result.push "animation#{animation.is}.#{region_entry}"
 		result
+	to_string_pattern_arguments : (pattern) ->
+		surface = null
+		options = null
+		switch pattern.type
+			when 'overlay', 'overlayfast', 'reduce', 'replace', 'interpolate', 'asis', 'bind', 'add', 'reduce'
+				surface = @get_surface_id pattern.surface
+				options = [surface, pattern.wait, pattern.x, pattern.y]
+			when 'base'
+				surface = @get_surface_id pattern.surface
+				options = [surface, pattern.wait]
+			when 'move'
+				options = [0, pattern.wait, pattern.x, pattern.y]
+			when 'insert', 'start', 'stop'
+				animation_id = @get_animation_id animations, pattern.animation_id
+				options = [animation_id]
+			when 'alternativestart', 'alternativestop'
+				options = []
+				for animation_id in pattern.animation_ids
+					options.push @get_animation_id animations, animation_id
+		options
 	to_string_surface_regions : (regions) ->
 		order = []
 		for id, region of regions
