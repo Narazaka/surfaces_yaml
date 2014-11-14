@@ -78,7 +78,7 @@ class SurfacesYaml.Surfaces
 		if surface.base?
 			unless surface.base instanceof Array
 				surface.base = [surface.base]
-			for base in surface.base
+			for base in surface.base.slice().reverse()
 				if @surfaces[base]?
 					@finalize_surface base
 #					console.log '-- surface'
