@@ -189,7 +189,7 @@ class SurfacesYaml.Surfaces
 					options = @to_string_pattern_arguments animations, pattern
 					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}," + (o for o in options when o?).join(',')
 			if animation.regions?
-				region_entries = @to_string_surface_regions animations, animation.regions
+				region_entries = @to_string_surface_regions animation.regions
 				for region_entry in region_entries
 					result.push "animation#{animation.is}.#{region_entry}"
 		result
