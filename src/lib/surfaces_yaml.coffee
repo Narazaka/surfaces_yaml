@@ -81,6 +81,12 @@ class SurfacesYaml.Surfaces
 			for base in surface.base
 				if @surfaces[base]?
 					@finalize_surface base
+#					console.log '-- surface'
+#					console.log surface
+#					console.log '-- base'
+#					console.log @surfaces_finalized[base]
+#					console.log '-- diff'
+#					console.log parent_only_elements surface, @surfaces_finalized[base]
 					extend surface, @surfaces_finalized[base]
 				else
 					throw "surface's base entry not found in surface #{id}"
@@ -180,14 +186,14 @@ class SurfacesYaml.Surfaces
 				result.push "animation#{animation.is}.option,#{animation.option}"
 			if animation.patterns?
 				for pattern, index in animation.patterns
-					options = @to_string_pattern_arguments pattern
+					options = @to_string_pattern_arguments animations, pattern
 					result.push "animation#{animation.is}.pattern#{index},#{pattern.type}," + (o for o in options when o?).join(',')
 			if animation.regions?
-				region_entries = @to_string_surface_regions animation.regions
+				region_entries = @to_string_surface_regions animations, animation.regions
 				for region_entry in region_entries
 					result.push "animation#{animation.is}.#{region_entry}"
 		result
-	to_string_pattern_arguments : (pattern) ->
+	to_string_pattern_arguments : (animations, pattern) ->
 		surface = null
 		options = null
 		switch pattern.type
