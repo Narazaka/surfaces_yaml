@@ -1,5 +1,4 @@
 all:
 	coffee -o ../bin -c bin/surfaces_yaml.coffee
-	coffee -o ../lib -cbj surfaces_yaml.js lib/util.coffee lib/surfaces_yaml.coffee
-	perl -i".old" -pe "$$.==1&&s@^@#!/usr/bin/env node\n@" ../bin/surfaces_yaml.js
-	perl -e "unlink '../bin/surfaces_yaml.js.old'"
+	cat lib/util.coffee lib/surfaces_yaml.coffee | coffee -cb --stdio > ../lib/surfaces_yaml.js 
+	node -e "fs=require('fs');c='#!/usr/bin/env node\n'+fs.readFileSync('../bin/surfaces_yaml.js');fs.writeFileSync('../bin/surfaces_yaml.js', c)"
